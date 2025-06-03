@@ -108,12 +108,13 @@ Aqui estão os passos detalhados para replicar este ambiente, **ajustados para a
 ## ⚙️ Configurações e Explorando Recursos
 
 * **Configuração Inicial:** (Detalhes do que foi configurado no wizard ou após, ex: DNS, NTP, etc.)
-* **Regras de Firewall:** (Descreva regras que você criou para testes, ex: "Bloqueio de sites via aliases", "Permissão para SSH externo", etc.)
-* **Pacotes Instalados:** (Liste os plugins que você instalou e configurou)
+* **Regras de Firewall:**
+     * `Rotas de comunicação interna e externa com a faixa de IP do gateway
+* **Pacotes Instalados:**
     * `os-vmtools`: Para integração aprimorada com o VMware.
     * `os-adguardhome`: Para filtragem de DNS e bloqueio de anúncios.
     * `os-openvpn`: Configuração de servidor VPN para acesso remoto.
-    * [Outros pacotes que você explorar]
+* **Criação de Usuários especificos para gestão e administração do firewall**
 * **Testes Realizados:** (criação de regras para comunicação com rede interna e privada de ip diferente, criação de regra para acesso apartir desse ip)
 
 ## 📸 Screenshots

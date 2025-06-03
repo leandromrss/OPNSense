@@ -20,12 +20,7 @@ Este projeto tem como objetivo principal:
     * **CPUs Alocadas:** [2 vCPUs]
     * **Disco Rígido:** [50GB]
 * **Conectividade do Host:** Utiliza uma única interface de rede física (Wi-Fi ou Ethernet) no host para a conexão de internet da VM.
-
-## 🌐 Topologia de Rede (Esquema Virtual) - **CORRIGIDO**
-
 Este diagrama representa a estrutura de rede virtual configurada para o OPNsense com as interfaces e IPs atualizados:
-
-### 🌐 Topologia de Rede (Esquema Virtual) - **CORRIGIDO (Mermaid Diagram)**
 
 ```mermaid
 graph TD

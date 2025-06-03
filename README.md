@@ -25,31 +25,29 @@ Este projeto tem como objetivo principal:
 
 Este diagrama representa a estrutura de rede virtual configurada para o OPNsense com as interfaces e IPs atualizados:
 
-
+&lt;pre>
 +---------------------+           +---------------------+
-|                     |           |                     |
-|  Seu Computador |           |   VM OPNsense |
-|  (Host)             |           |                     |
-|  - IP: (via DHCP da sua rede)    |                     |
-|                     |           |  - em0 (WAN):         |
-|  +----------------+ |           |    VMware NIC (Bridged) |
-|  | Placa de Rede  |-----------------|    IP: 192.168.202.1/24 (ESTÁTICO) |
-|  | Física         | |           |                     |
-|  +----------------+ |           |  - em1 (LAN):         |
-|                     |           |    VMware NIC (Host-only VMnet1)|
-|                     |           |    IP: 192.168.123.1/24 |
-|  +----------------+ |           |    DHCP: 192.168.123.100-150 |
-|  | VMware Network | |           |                     |
-|  | Adapter VMnet1 |-----------------|                     |
-|  | (Host-only)    | |           |                     |
-|  | - IP: 196.168.123.10 |           |                     |
-|  | - Gateway: 192.168.123.1 |           |                     |
-|  | - DNS: 192.168.123.1 |           |                     |
-|  +----------------+ |           +---------------------+
+| Seu Computador |           |   VM OPNsense |
+| (Host)              |           |                     |
+| - IP: (DHCP da rede)  |           |                     |
+|                       |           |  eth0/em0 (WAN):      |
+|   +-----------------+ |           |    (VMware Bridged)  |
+|   | Placa de Rede   |-----------------|    IP: 192.168.202.1/24 (Estático)|
+|   | Física          | |           |                     |
+|   +-----------------+ |           |  eth1/em1 (LAN):      |
+|                       |           |    (VMware Host-only VMnet1)|
+|   +-----------------+ |           |    IP: 192.168.123.1/24 |
+|   | VMware Network  |-----------------|    DHCP: 192.168.123.100-150|
+|   | Adapter VMnet1  | |           |                     |
+|   | - IP: 192.168.123.254|           |                     |
+|   | - Gateway: 192.168.123.1|           |                     |
+|   | - DNS: 192.168.123.1  |           |                     |
+|   +-----------------+ |           +---------------------+
 +---------------------+                   |
-| (Conexão interna à VMnet1)
+| (Rede Interna VMnet1)
+|
 +---------------------+
-
+&lt;/pre>
 
 * **WAN (em0 - Bridged):** Conectada diretamente à rede física do host, configurada com IP estático (`192.168.202.1`). Para ter acesso à internet, esta rede `192.168.202.0/24` deve ser roteável a partir do seu roteador principal. **(Nota: Em ambientes domésticos, a WAN normalmente pega um IP via DHCP do roteador principal.)**
 * **LAN (em1 - Host-only VMnet1):** Uma rede virtual isolada entre o OPNsense e o host (e outras VMs Host-only). O OPNsense atua como gateway (`192.168.123.1`) e servidor DHCP para essa rede.

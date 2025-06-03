@@ -22,21 +22,25 @@ Este projeto tem como objetivo principal:
 * **Conectividade do Host:** Utiliza uma única interface de rede física (Wi-Fi ou Ethernet) no host para a conexão de internet da VM.
 Este diagrama representa a estrutura de rede virtual configurada para o OPNsense com as interfaces e IPs atualizados:
 
-```mermaid
-graph TD
-    subgraph Host["Seu Computador (Host)"]
-        A[Placa de Rede Física] --> B[VMware NIC Bridged WAN]
-        C[VMware Adapter VMnet1 - 192.168.123.254] --> D[VMware NIC Host-only VMnet1]
-        D --> G[Rede Interna VMnet1]
-    end
+---
 
-    subgraph OPNsense["VM OPNsense"]
-        B --> E[em0 - 192.168.202.1/24]
-        D --> F[em1 - 192.168.123.1/24 - DHCP: .100-.200]
-        F --> H[VM Cliente (Opcional) - 192.168.123.X]
-    end
+**Detalhes das Interfaces e IPs:**
 
-```
+* **Seu Computador (Host):**
+    * **Placa de Rede Física:** Obtém IP via DHCP da rede principal (internet).
+    * **VMware Network Adapter VMnet1 (Host-only):**
+        * IP: `192.168.123.254`
+        * Gateway Padrão: `192.168.123.1`
+        * Servidor DNS Preferencial: `192.168.123.1`
+
+* **VM OPNsense:**
+    * **em0 (WAN - VMware Bridged):**
+        * IP: `192.168.202.1/24` (Estático)
+        * *Nota: Para acesso à internet, esta rede `192.168.202.0/24` deve ser roteável a partir do seu roteador principal ou o `em0` configurado para DHCP.*
+    * **em1 (LAN - VMware Host-only VMnet1):**
+        * IP: `192.168.123.1/24`
+        * DHCP Server: Faixa `192.168.123.100` a `192.168.123.200`
+---
 
 * **WAN (em0 - Bridged):** Conectada diretamente à rede física do host, configurada com IP estático (`192.168.202.1`). Para ter acesso à internet, esta rede `192.168.202.0/24` deve ser roteável a partir do seu roteador principal. **(Nota: Em ambientes domésticos, a WAN normalmente pega um IP via DHCP do roteador principal.)**
 * **LAN (em1 - Host-only VMnet1):** Uma rede virtual isolada entre o OPNsense e o host (e outras VMs Host-only). O OPNsense atua como gateway (`192.168.123.1`) e servidor DHCP para essa rede.

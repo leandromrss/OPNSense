@@ -25,29 +25,29 @@ Este projeto tem como objetivo principal:
 
 Este diagrama representa a estrutura de rede virtual configurada para o OPNsense com as interfaces e IPs atualizados:
 
-&lt;pre>
-+---------------------+           +---------------------+
-| Seu Computador |           |   VM OPNsense |
-| (Host)              |           |                     |
-| - IP: (DHCP da rede)  |           |                     |
-|                       |           |  eth0/em0 (WAN):      |
-|   +-----------------+ |           |    (VMware Bridged)  |
-|   | Placa de Rede   |-----------------|    IP: 192.168.202.1/24 (Estático)|
-|   | Física          | |           |                     |
-|   +-----------------+ |           |  eth1/em1 (LAN):      |
-|                       |           |    (VMware Host-only VMnet1)|
-|   +-----------------+ |           |    IP: 192.168.123.1/24 |
-|   | VMware Network  |-----------------|    DHCP: 192.168.123.100-150|
-|   | Adapter VMnet1  | |           |                     |
-|   | - IP: 192.168.123.254|           |                     |
-|   | - Gateway: 192.168.123.1|           |                     |
-|   | - DNS: 192.168.123.1  |           |                     |
-|   +-----------------+ |           +---------------------+
-+---------------------+                   |
-| (Rede Interna VMnet1)
-|
-+---------------------+
-&lt;/pre>
+### 🌐 Topologia de Rede (Esquema Virtual) - **CORRIGIDO (Mermaid Diagram)**
+
+```mermaid
+graph TD
+    subgraph Host_PC ["Seu Computador (Host)"]
+        A[Placa de Rede Física<br>IP: DHCP da Rede Principal] --- B(VMware NIC <br>Bridged (WAN))
+        C[VMware Network Adapter VMnet1<br>(Host-only)<br>IP: 192.168.123.254<br>Gateway/DNS: 192.168.123.1] --- D(VMware NIC <br>Host-only VMnet1 (LAN))
+    end
+
+    subgraph OPNsense_VM ["VM OPNsense"]
+        B --- E[em0 (WAN)<br>IP: 192.168.202.1/24 (Estático)]
+        D --- F[em1 (LAN)<br>IP: 192.168.123.1/24<br>DHCP: 192.168.123.100-200]
+    end
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style C fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#ccf,stroke:#333,stroke-width:2px
+    style F fill:#ccf,stroke:#333,stroke-width:2px
+    style G fill:#fcf,stroke:#333,stroke-width:2px
+    linkStyle 0 stroke-width:2px,fill:none,stroke:green;
+    linkStyle 1 stroke-width:2px,fill:none,stroke:blue;
+    linkStyle 2 stroke-width:2px,fill:none,stroke:red;
+```
 
 * **WAN (em0 - Bridged):** Conectada diretamente à rede física do host, configurada com IP estático (`192.168.202.1`). Para ter acesso à internet, esta rede `192.168.202.0/24` deve ser roteável a partir do seu roteador principal. **(Nota: Em ambientes domésticos, a WAN normalmente pega um IP via DHCP do roteador principal.)**
 * **LAN (em1 - Host-only VMnet1):** Uma rede virtual isolada entre o OPNsense e o host (e outras VMs Host-only). O OPNsense atua como gateway (`192.168.123.1`) e servidor DHCP para essa rede.

@@ -24,23 +24,17 @@ Este diagrama representa a estrutura de rede virtual configurada para o OPNsense
 
 ```mermaid
 graph TD
-    subgraph Host_PC["Seu Computador (Host)"]
-        A[Placa de Rede Física<br/>IP: DHCP da Rede Principal] --> B[VMware NIC (Bridged WAN)]
-        C[VMware Network Adapter VMnet1<br/>(Host-only)<br/>IP: 192.168.123.254<br/>Gateway/DNS: 192.168.123.1] --> D[VMware NIC (Host-only VMnet1 LAN)]
+    subgraph Host["Seu Computador (Host)"]
+        A[Placa de Rede Física] --> B[VMware NIC Bridged WAN]
+        C[VMware Adapter VMnet1 - 192.168.123.254] --> D[VMware NIC Host-only VMnet1]
+        D --> G[Rede Interna VMnet1]
     end
 
-    subgraph OPNsense_VM["VM OPNsense"]
-        B --> E[em0 (WAN)<br/>IP: 192.168.202.1/24 (Estático)]
-        D --> F[em1 (LAN)<br/>IP: 192.168.123.1/24<br/>DHCP: 192.168.123.100-200]
+    subgraph OPNsense["VM OPNsense"]
+        B --> E[em0 - 192.168.202.1/24]
+        D --> F[em1 - 192.168.123.1/24 - DHCP: .100-.200]
+        F --> H[VM Cliente (Opcional) - 192.168.123.X]
     end
-
-    %% Estilização opcional
-    style A fill:#fdf,stroke:#333,stroke-width:2px
-    style C fill:#fdf,stroke:#333,stroke-width:2px
-    style E fill:#ccf,stroke:#333,stroke-width:2px
-    style F fill:#ccf,stroke:#333,stroke-width:2px
-    style B fill:#eee,stroke:#333,stroke-width:2px
-    style D fill:#eee,stroke:#333,stroke-width:2px
 
 ```
 
@@ -116,10 +110,13 @@ Aqui estão os passos detalhados para replicar este ambiente, **ajustados para a
     * `os-adguardhome`: Para filtragem de DNS e bloqueio de anúncios.
     * `os-openvpn`: Configuração de servidor VPN para acesso remoto.
     * [Outros pacotes que você explorar]
-* **Testes Realizados:** (Descreva os cenários que você testou, ex: "Conectividade de VMs clientes através do OPNsense", "Testes de bloqueio de firewall", "Uso da VPN", etc.)
+* **Testes Realizados:** (criação de regras para comunicação com rede interna e privada de ip diferente, criação de regra para acesso apartir desse ip)
 
-## 📸 Screenshots (Adição Após término de toda a configuração)
+## 📸 Screenshots
 
+![vm - opnsense](https://github.com/user-attachments/assets/d510409d-a0f9-4bfe-88b1-316b8684b5aa)
+![interfaces](https://github.com/user-attachments/assets/2c768ca3-1cd9-4e88-9a7c-d72c00b1e8ba)
+![interfaces - tabela arp](https://github.com/user-attachments/assets/103c32bf-2b44-44e1-a62d-af7976342a4a)
 
 ## 🤝 Contribuições
 

@@ -25,13 +25,13 @@ Este diagrama representa a estrutura de rede virtual configurada para o OPNsense
 ```mermaid
 graph TD
     subgraph Host_PC ["Seu Computador (Host)"]
-        A[Placa de Rede Física<br>IP: DHCP da Rede Principal] --- B(VMware NIC <br>Bridged (WAN))
-        C[VMware Network Adapter VMnet1<br>(Host-only)<br>IP: 192.168.123.254<br>Gateway/DNS: 192.168.123.1] --- D(VMware NIC <br>Host-only VMnet1 (LAN))
+        A[Placa de Rede Física\nIP: DHCP da Rede Principal] --- B(VMware NIC\nBridged (WAN))
+        C[VMware Network Adapter VMnet1\n(Host-only)\nIP: 192.168.123.254\nGateway/DNS: 192.168.123.1] --- D(VMware NIC\nHost-only VMnet1 (LAN))
     end
 
     subgraph OPNsense_VM ["VM OPNsense"]
-        B --- E[em0 (WAN)<br>IP: 192.168.202.1/24 (Estático)]
-        D --- F[em1 (LAN)<br>IP: 192.168.123.1/24<br>DHCP: 192.168.123.100-200]
+        B --- E[em0 (WAN)\nIP: 192.168.202.1/24 (Estático)]
+        D --- F[em1 (LAN)\nIP: 192.168.123.1/24\nDHCP: 192.168.123.100-200]
     end
 
     style A fill:#f9f,stroke:#333,stroke-width:2px

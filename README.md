@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/eb810d99-f50c-4083-837e-c63b649792c2)# Projeto de Laboratório: OPNsense Firewall/Router Virtualizado
+# Projeto de Laboratório: OPNsense Firewall/Router Virtualizado
 
 Este repositório documenta a instalação e configuração de um firewall/router OPNsense em um ambiente de máquina virtual (VMware Workstation/Player), projetado para fins de estudo e experimentação de rede.
 

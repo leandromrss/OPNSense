@@ -24,24 +24,24 @@ Este diagrama representa a estrutura de rede virtual configurada para o OPNsense
 
 ```mermaid
 graph TD
-    subgraph Host_PC ["Seu Computador (Host)"]
-        A[Placa de Rede Física\nIP: DHCP da Rede Principal] --- B(VMware NIC\nBridged (WAN))
-        C[VMware Network Adapter VMnet1\n(Host-only)\nIP: 192.168.123.254\nGateway/DNS: 192.168.123.1] --- D(VMware NIC\nHost-only VMnet1 (LAN))
+    subgraph Host_PC["Seu Computador (Host)"]
+        A[Placa de Rede Física<br/>IP: DHCP da Rede Principal] --> B[VMware NIC (Bridged WAN)]
+        C[VMware Network Adapter VMnet1<br/>(Host-only)<br/>IP: 192.168.123.254<br/>Gateway/DNS: 192.168.123.1] --> D[VMware NIC (Host-only VMnet1 LAN)]
     end
 
-    subgraph OPNsense_VM ["VM OPNsense"]
-        B --- E[em0 (WAN)\nIP: 192.168.202.1/24 (Estático)]
-        D --- F[em1 (LAN)\nIP: 192.168.123.1/24\nDHCP: 192.168.123.100-200]
+    subgraph OPNsense_VM["VM OPNsense"]
+        B --> E[em0 (WAN)<br/>IP: 192.168.202.1/24 (Estático)]
+        D --> F[em1 (LAN)<br/>IP: 192.168.123.1/24<br/>DHCP: 192.168.123.100-200]
     end
 
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style C fill:#f9f,stroke:#333,stroke-width:2px
+    %% Estilização opcional
+    style A fill:#fdf,stroke:#333,stroke-width:2px
+    style C fill:#fdf,stroke:#333,stroke-width:2px
     style E fill:#ccf,stroke:#333,stroke-width:2px
     style F fill:#ccf,stroke:#333,stroke-width:2px
-    style G fill:#fcf,stroke:#333,stroke-width:2px
-    linkStyle 0 stroke-width:2px,fill:none,stroke:green;
-    linkStyle 1 stroke-width:2px,fill:none,stroke:blue;
-    linkStyle 2 stroke-width:2px,fill:none,stroke:red;
+    style B fill:#eee,stroke:#333,stroke-width:2px
+    style D fill:#eee,stroke:#333,stroke-width:2px
+
 ```
 
 * **WAN (em0 - Bridged):** Conectada diretamente à rede física do host, configurada com IP estático (`192.168.202.1`). Para ter acesso à internet, esta rede `192.168.202.0/24` deve ser roteável a partir do seu roteador principal. **(Nota: Em ambientes domésticos, a WAN normalmente pega um IP via DHCP do roteador principal.)**
